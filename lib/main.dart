@@ -4,7 +4,7 @@ import 'injection_container.dart' as di;
 
 void main() async {
   //Nous ajoutons le localisateur de service au debut de l'application
-  await di.init();
+  di.init();
   runApp(MyApp());
 }
 

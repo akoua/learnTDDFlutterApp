@@ -14,7 +14,12 @@ import 'package:http/http.dart' as http;
 import 'features/domain/useCases/get_trivia_concret_number.dart';
 
 final sl = GetIt.instance;
-Future<void> init() async {
+void init() {
+  //! External
+  sl.registerSingletonAsync(() async => SharedPreferences.getInstance());
+  sl.registerLazySingleton(() => http.Client());
+  sl.registerLazySingleton(() => DataConnectionChecker());
+
   //! Features - Trivia Number
   //BLoC
   //ici j'ai une nouvelle instance à tout appel
@@ -30,17 +35,14 @@ Future<void> init() async {
   //Data Sources
   sl.registerLazySingleton<TriviaNumberRemoteDataSource>(
       () => TriviaNumberRemoteDataSourceImpl(httpClient: sl()));
-  sl.registerLazySingleton<TriviaNumberLocalDataSource>(
-      () => TriviaNumberLocalDataSourceImpl(sharedPreferences: sl()));
+  // sl.registerLazySingleton<TriviaNumberLocalDataSource>(
+  //     () => TriviaNumberLocalDataSourceImpl(sharedPreferences: sl()));
+  sl.registerSingletonWithDependencies<TriviaNumberLocalDataSource>(
+      () => TriviaNumberLocalDataSourceImpl(sharedPreferences: sl()),
+      dependsOn: [SharedPreferences]);
   //! Core
   //inputConverter
   sl.registerLazySingleton(() => InputConverter());
   sl.registerLazySingleton<NetworkInfo>(
       () => NetworkInfoImpl(connectionChecker: sl()));
-
-  //! External
-  final sharedPreferences = await SharedPreferences.getInstance();
-  sl.registerLazySingleton(() => http.Client());
-  sl.registerLazySingleton(() => DataConnectionChecker());
-  sl.registerLazySingleton(() => sharedPreferences);
 }
