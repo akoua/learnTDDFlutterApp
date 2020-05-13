@@ -62,7 +62,6 @@ class TriviaNumberBloc extends Bloc<TriviaNumberEvent, TriviaNumberState> {
         yield* _eitherLoadedOrErrorState(failureOrTrivia);
       });
     } else if (event is GetRandomTriviaNumberEvent) {
-      print('rentré hein');
       yield Loading();
       final failureOrTrivia = await getRandomTriviaNumber(
         NoParams(),

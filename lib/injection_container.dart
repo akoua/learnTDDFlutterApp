@@ -14,11 +14,14 @@ import 'package:http/http.dart' as http;
 import 'features/domain/useCases/get_trivia_concret_number.dart';
 
 final sl = GetIt.instance;
+
 void init() {
   //! External
-  sl.registerSingletonAsync(() async => SharedPreferences.getInstance());
-  sl.registerLazySingleton(() => http.Client());
-  sl.registerLazySingleton(() => DataConnectionChecker());
+  sl.registerSingletonAsync<SharedPreferences>(
+      () async => SharedPreferences.getInstance());
+  sl.registerLazySingleton<http.Client>(() => http.Client());
+  sl.registerLazySingleton<DataConnectionChecker>(
+      () => DataConnectionChecker());
 
   //! Features - Trivia Number
   //BLoC
@@ -32,6 +35,8 @@ void init() {
   sl.registerLazySingleton<TriviaNumberRepository>(() =>
       TriviaNumberRepositoryImpl(
           remoteDataSource: sl(), localDataSource: sl(), networkInfo: sl()));
+  // sl.registerSingleton<TriviaNumberRepository>(TriviaNumberRepositoryImpl(
+  //     remoteDataSource: sl(), localDataSource: sl(), networkInfo: sl()));
   //Data Sources
   sl.registerLazySingleton<TriviaNumberRemoteDataSource>(
       () => TriviaNumberRemoteDataSourceImpl(httpClient: sl()));
