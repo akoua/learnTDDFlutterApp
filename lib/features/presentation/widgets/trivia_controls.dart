@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:trivia_number_new/features/presentation/bloc/bloc/trivia_number_bloc.dart';
 
+import '../../../injection_container.dart';
+
 class TriviaControls extends StatefulWidget {
   final BuildContext ctx;
   final TriviaNumberBloc triviaNumberBloc;
@@ -114,6 +116,6 @@ class _TriviaControlsState extends State<TriviaControls> {
     print("dispatchRandom ${triviaNumberBloc.state}");
     controller.clear();
     triviaNumberBloc.add(GetRandomTriviaNumberEvent());
-    // BlocProvider.of<TriviaNumberBloc>(ctx).add(GetRandomTriviaNumberEvent());
+    // sl<TriviaNumberBloc>().add(GetRandomTriviaNumberEvent());
   }
 }

@@ -12,8 +12,8 @@ class MessageDisplay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("MessageDisplay ${ctx.hashCode}");
-    print("MessageDisplay ${BlocProvider.of<TriviaNumberBloc>(context)}");
+    // print("MessageDisplay ${ctx.hashCode}");
+    // print("MessageDisplay ${BlocProvider.of<TriviaNumberBloc>(context)}");
     return Container(
       height: MediaQuery.of(context).size.height / 3,
       child: Center(

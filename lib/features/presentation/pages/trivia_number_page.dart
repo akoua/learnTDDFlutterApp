@@ -20,38 +20,7 @@ class TriviaNumberPage extends StatelessWidget {
 }
 
 buildBody(BuildContext ctx) {
-  print("TriviaNumberPage ${ctx.hashCode}");
-  // return Padding(
-  //   padding: const EdgeInsets.all(10),
-  //   child: Column(
-  //     children: <Widget>[
-  //       SizedBox(height: 10),
-  //       // Top half
-  //       Container(
-  //         // Third of the size of the screen
-  //         height: MediaQuery.of(ctx).size.height / 3,
-  //         child: BlocBuilder<TriviaNumberBloc, TriviaNumberState>(
-  //             builder: (context, state) {
-  //           print("BlocBuilder ${ctx.hashCode}");
-  //           if (state is Empty) {
-  //             return MessageDisplay(ctx: ctx, message: "Start searching");
-  //           } else if (state is Loading) {
-  //             return LoadingWidget();
-  //           } else if (state is Loaded) {
-  //             return LoadedWidget();
-  //           } else if (state is Error) {
-  //             return MessageDisplay(ctx: ctx, message: state.message);
-  //           } else {
-  //             return MessageDisplay(ctx: ctx, message: "Nothing");
-  //           }
-  //         }),
-  //       ),
-  //       SizedBox(height: 20),
-  //       // Bottom half
-  //       TriviaControls(ctx: ctx)
-  //     ],
-  //   ),
-  // );
+  // print("TriviaNumberPage ${ctx.hashCode}");
   return BlocProvider(
       create: (_) => sl<TriviaNumberBloc>(),
       child: Builder(builder: (providerContext) {
@@ -76,7 +45,9 @@ buildBody(BuildContext ctx) {
                   } else if (state is Loading) {
                     return LoadingWidget();
                   } else if (state is Loaded) {
-                    return LoadedWidget();
+                    return LoadedWidget(
+                      triviaNumber: state.triviaNumber,
+                    );
                   } else if (state is Error) {
                     return MessageDisplay(
                         ctx: providerContext, message: state.message);
